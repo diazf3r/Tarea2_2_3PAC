@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatefulWidget {
@@ -10,7 +12,7 @@ class CustomInput extends StatefulWidget {
     this.maxLength = 10,
     this.keyboardType = TextInputType.text,
     required this.validator,
-  }) : super(key: key);
+  });
 
   IconData icon;
   var validator;
@@ -38,23 +40,23 @@ class _CustomInputState extends State<CustomInput> {
           : false,
       maxLength: widget.maxLength,
       decoration: InputDecoration(
-        labelText: 'ingrese su ${widget.label}',
+        label: Text(widget.label),
+        hintText: 'ingrese su ${widget.label}',
         prefixIcon: Icon(widget.icon),
-        suffixIcon:
-          widget.keyboardType == TextInputType.visiblePassword 
-          ? IconButton(
-              icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
-              color: _obscureText ? Colors.grey : Colors.blue,
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ) 
-          : null,
+        suffixIcon: widget.keyboardType == TextInputType.visiblePassword
+            ? IconButton(
+                icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility),
+                color: _obscureText ? Colors.grey : Colors.blue,
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
+            : null,
         border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
       ),
     );
   }

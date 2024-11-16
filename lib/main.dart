@@ -9,11 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final users = {
-    'omar.padilla@unah.edu.hn ': '20192001400',
-    'omar.diaz@unah.hn': '20192001399',
-  };
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,8 +20,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'login',
       routes: {
-        // 'registro': (context) => RegistroPage(),
-        "login": (context) =>  LoginPage(),
+        'register': (context) => RegisterPage(),
+        "login": (context) => LoginPage(),
       },
     );
   }
