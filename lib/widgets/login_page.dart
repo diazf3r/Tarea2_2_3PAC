@@ -9,38 +9,25 @@ class LoginPage extends StatelessWidget {
 
   final users = {
     "user1": {
-      'name': 'claudio.vasquez@unah.hn',
-      'password': '20192002377',
+      'name': 'omar.padilla@unah.edu.hn',
+      'password': 'Test123/',
     },
     "user2": {
       'name': 'omar.diaz@unah.hn',
-      'password': '20192001399',
+      'password': 'Estoesunaprueba/2',
     },
   };
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  bool checkCredentials(String email, String password) {
-    print(email);
-    print(password);
-    for (var user in users.values) {
-      print(user);
-      if (user['name'] == email && user['password'] == password) {
-        print("found match");
-        return true; // Found a match!
-      }
-    }
-    print("shit failed");
-    return false; // No match found
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Login Page'),
+          title: const Text('Iniciar Sesión'),
           centerTitle: true,
         ),
-        body: Column(children: [
+        body: Column(
+          children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
@@ -50,13 +37,13 @@ class LoginPage extends StatelessWidget {
                     CustomInput(
                       controller: correoController,
                       label: "Correo",
-                      maxLength: 40,
+                      maxLength: 35,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'El nombre es obligatorio';
+                          return 'El correo es obligatorio';
                         }
 
-                        if (!value.contains('@') || !value.contains('unah.edu.hn') || !value.contains('unah.hn')) {
+                        if (!value.contains('@')) {
                           return 'El correo no es válido';
                         }
 
@@ -67,45 +54,46 @@ class LoginPage extends StatelessWidget {
                       controller: passwordController,
                       label: "Contraseña",
                       icon: Icons.lock,
-                      maxLength: 30,
+                      maxLength: 20,
                       keyboardType: TextInputType.visiblePassword,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'La contraseña es obligatoria';
+                          return 'Ingrese la contraseña';
                         }
                         return null;
                       },
                     ),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          foregroundColor: Colors.white,
+                        ),
                         onPressed: () {
                           if (!formKey.currentState!.validate()) {
-                            print('returning');
                             return;
                           }
-                          print('valid form');
                           final email = correoController.text;
                           final password = passwordController.text;
 
-                          var check = false;
-
                           for (var user in users.values) {
-                            print(user);
                             if (user['name'] == email &&
                                 user['password'] == password) {
-                              check = true;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(email: email),
+                                ),
+                              );
                             }
                           }
-
-                          print(check);
-
                         },
                         child: const Text('Iniciar sesion')),
                   ],
                 )),
           ),
-          ElevatedButton(
+          TextButton(
               onPressed: () {
-               //go to registro
+                Navigator.pushNamed(context, 'register');
               },
               child: const Text('Registrarse')),
         ]));
